@@ -6,7 +6,7 @@
 /*   By: mel-assa <mel-assa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 14:21:12 by mel-assa          #+#    #+#             */
-/*   Updated: 2025/10/05 17:22:18 by mel-assa         ###   ########.fr       */
+/*   Updated: 2025/10/11 19:13:52 by mel-assa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 int ft_printf(const char *fmt, ...)
 {
-	int cnt = 0;
-	int i = 0;
+	va_list args; // the cursor that moves throught the arguements (declare the list)
+	va_start (args, fmt); // Start right after the fixed arguement (fmt string in this case)
+	int cnt;
+	int i;
 
+	cnt = 0;
+	i = 0;
 	while (fmt[i])
 	{
 		if (fmt[i] != '%')
@@ -36,6 +40,7 @@ int ft_printf(const char *fmt, ...)
 			i++;
 		}
 	}
+	va_end(args); // End trasversal
 	return (cnt);
 }
 # include <stdio.h>

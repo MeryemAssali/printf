@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-assa <mel-assa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 21:32:56 by mel-assa          #+#    #+#             */
-/*   Updated: 2025/09/02 19:59:10 by mel-assa         ###   ########.fr       */
+/*   Created: 2025/09/28 12:22:27 by mel-assa          #+#    #+#             */
+/*   Updated: 2025/10/11 19:24:16 by mel-assa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
+# include <unistd.h>
+# include <stdarg.h>
 
-	i = 0;
-	while (i < n && (s1[i] || s2[i]))
-	{
-		if ((s1[i] > s2[i]) || (s1[i] < s2[i]))
-		{
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		}
-		i++;
-	}
-	return (0);
-}
+int ft_printf(const char *, ...);
+int 
+
+#endif
