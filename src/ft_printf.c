@@ -6,76 +6,81 @@
 /*   By: mel-assa <mel-assa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 14:21:12 by mel-assa          #+#    #+#             */
-/*   Updated: 2025/10/11 19:13:52 by mel-assa         ###   ########.fr       */
+/*   Updated: 2025/10/28 22:03:20 by mel-assa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//include "../libft/libft.h"
+#include "../libft/libft.h"
 
-int ft_strlen(char *stn)
+static int print_pct(void)
 {
-	int i = 0;
-	while (stn[i])
-	{
-		i++;
-	}
-	return(i);
+	write(1, "%", 1);
+	return (1);
+}
+static int handle_c(va_list *args)
+{
+	char c;
+	c = va_arg(*args, int);
+	write (1, &c, 1);
+	return (1);
+}
+static int handle_s (va_list *args)
+{
+	char *str;
+	int len;
+
+	str = va_arg (*args, char *);
+	if (!str)
+		str = "(null)";
+	len = ft_strlen(str);
+	write (1, str, len);
+	return (len);
 }
 
 int ft_printf(const char *fmt, ...)
 {
-	va_list args; // Declares the variable to access the variable (unkown) arguments
-	va_start (args, fmt); // Start scanning right after the fixed arguement (fmt string in this case)
-	char c;
-	char *str;
+	va_list args;
+	va_start (args, fmt);
 	int cnt;
 	int i;
 
 	cnt = 0;
 	i = 0;
-	while (fmt[i])			//printf("%d\n",ft_printf("I lov%%c 42. Hell%c\n", 'e','o'));
+	while (fmt[i]) 
 	{
-		if (fmt[i] != '%') // if it's not %
+		if (fmt[i] != '%')
 		{
-			cnt++; // count it 
-			write(1, &fmt[i++], 1); // Print it. Go to the next one.
+			write(1, &fmt[i++], 1);
+			cnt++;
 		}
-		else // if it is %
+		else if (fmt[++i])
 		{
-			// Handling double percentge sign
-			if (fmt[i+1] == '%' && fmt[i+1]) // Peek into the next one. If it's also %, and we're still not at the end of the string
+			if (fmt[i] == '%')
+				cnt += print_pct();
+			else if (fmt[i] == 'c')
+				cnt += handle_c (&args);
+			else if (fmt[i] == 's')
+				cnt += handle_s(&args);
+			else
 			{
-				write(1, "%", 1); // print %
-				i+=2; // skip both %
-				cnt++;
+				cnt = cnt + 1 + print_pct();
+				write (1, &fmt[i], 1);
 			}
-			// Handeling variable number of Characters
-			else if (fmt[i+1] == 'c' && fmt[i+1]) // when you encounter a %c
-			{
-				c = va_arg(args, int); // get the NEXT arguement that's an integer and cast it to a character c (and so on)
-				write(1,&c,1); // print that character
-				i+=2; // trasverse throught the format string
-				cnt++;
-			}
-
-			// Handeling a string
-			else if (fmt[i+1] == 's' && fmt[i+1])
-			{
-				str = va_arg(args, char *);
-				write(1, &str[0], ft_strlen(str));
-				i+=2;
-				cnt+= ft_strlen(str);
-			}
-
+			i++;
 		}
+		else
+			cnt += print_pct();
 	}
-	va_end(args); // End trasversal
+	va_end(args); 
 	return (cnt);
 }
-
 #include <stdio.h>
 int main()
 {
-	printf("%d\n",ft_printf("%c lov%c 42 %s\n", 'I','e',"Abu Dhabi"));
+	printf("%d\n",ft_printf("%c lov%c 42 %s\t", 'I','e',"Abu Dhabi"));
+	printf("%d\n",ft_printf("A%mZ\t",'x'));
+	printf("%d\n",ft_printf("[%s]\t", "hi"));
+	printf("%d\n",ft_printf("100%% done\t")); 
+	ft_printf("[%s]\n", NULL);
 }
