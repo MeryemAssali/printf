@@ -39,10 +39,13 @@ static int handle_s (va_list *args)
 }
 static int handle_d (va_list *args) // convert from int to char 
 {
-	char nt;
+	char *nt;
+	int len;
 
-	nt = va_arg(args, int);
-	write(1, &nt, 1);
+	nt = ft_itoa(va_arg(args, int));
+	len = ft_strlen(nt);
+	write(1, &nt, len);
+	return (len)
 }
 int ft_printf(const char *fmt, ...)
 {
