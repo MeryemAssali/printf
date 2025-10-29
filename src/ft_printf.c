@@ -42,11 +42,23 @@ static int handle_d (va_list *args) // convert from int to char
 	char *nt;
 	int len;
 
-	nt = ft_itoa(va_arg(args, int));
+	nt = ft_itoa(va_arg(*args, int));
 	len = ft_strlen(nt);
-	write(1, &nt, len);
-	return (len)
+	write(1, nt, len);
+	free(nt);
+	return (len);
 }
+static int handle_u(va_list *args) // wrong fix this. itoa doesn't handle values above int max
+{
+	char *unsint;
+	int len;
+
+	unsint = ft_itoa(va_arg(*args, unsigned int));
+	len = ft_strlen(unsint);
+	write (1, unsint, len);
+	free(unsint);
+	return (len);
+} 
 int ft_printf(const char *fmt, ...)
 {
 	va_list args;
@@ -71,8 +83,10 @@ int ft_printf(const char *fmt, ...)
 				cnt += handle_c (&args);
 			else if (fmt[i] == 's')
 				cnt += handle_s(&args);
-			else if (fmt[i] == 'd')
+			else if (fmt[i] == 'd' || fmt[i] == 'i')
 				cnt += handle_d (&args);
+			else if (fmt[i] == 'u')
+				cnt += handle_u (&args);
 			else
 			{
 				cnt = cnt + 1 + print_pct();
