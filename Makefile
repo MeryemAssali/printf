@@ -6,14 +6,14 @@
 #    By: mel-assa <mel-assa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 13:01:15 by mel-assa          #+#    #+#              #
-#    Updated: 2025/09/28 14:15:22 by mel-assa         ###   ########.fr        #
+#    Updated: 2025/11/02 18:21:15 by mel-assa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 CC = cc
 FLAGS = -Wall -Wextra -Werror
-SRC = src/ft_printf.c
+SRC = src/ft_printf.c src/ft_handle_u.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

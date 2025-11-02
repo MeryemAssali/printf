@@ -6,7 +6,7 @@
 /*   By: mel-assa <mel-assa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 14:21:12 by mel-assa          #+#    #+#             */
-/*   Updated: 2025/10/29 21:27:36 by mel-assa         ###   ########.fr       */
+/*   Updated: 2025/11/02 19:49:10 by mel-assa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,48 +48,7 @@ static int handle_d (va_list *args) // convert from int to char
 	free(nt);
 	return (len);
 }
-static int dig_cnt(unsigned int n)
-{
-	int digcnt;
-	
-	digcnt = 1;
-	while (n /= 10)
-	{
-		n /= 10;
-		digcnt++;
-	}
-	return (digcnt);
-}
-static int ft_utoa (unsigned int n)
-{
-	char *stn;
-	int diglen;
-	int i;
 
-	stn = malloc(diglen + 1);
-	if (!stn)
-		return (NULL);
-
-	i = 0;
-	stn[diglen] = '\0';
-	while (diglen--)
-	{
-		stn[diglen] = (n % 10) + '\0';
-		n /= 10;
-	}
-	return (stn);
-}
-static int handle_u(va_list *args) // wrong fix this. itoa doesn't handle values above int max
-{
-	char *unsint;
-	unsigned int len;
-
-	unsint = ft_utoa(va_arg(*args, unsigned int));
-	len = ft_strlen(unsint);
-	write (1, unsint, len);
-	free(unsint);
-	return (len);
-} 
 int ft_printf(const char *fmt, ...)
 {
 	va_list args;
@@ -117,9 +76,11 @@ int ft_printf(const char *fmt, ...)
 			else if (fmt[i] == 'd' || fmt[i] == 'i')
 				cnt += handle_d (&args);
 			else if (fmt[i] == 'u')
-				cnt += handle_u (&args);
-			else if ()
-				
+				cnt += ft_handle_u (&args);
+			else if (fmt[i] == 'x')
+				cnt += ft_handle_hex(&args);
+			else if (fmt[i] == 'X')
+				cnt += ft_handle_hex(&args);
 			else
 			{
 				cnt = cnt + 1 + print_pct();
@@ -133,12 +94,8 @@ int ft_printf(const char *fmt, ...)
 	va_end(args); 
 	return (cnt);
 }
-// #include <stdio.h>
-// int main()
-// {
-// 	printf("%d\n",ft_printf("%c lov%c 42 %s\t", 'I','e',"Abu Dhabi"));
-// 	printf("%d\n",ft_printf("A%mZ\t",'x'));
-// 	printf("%d\n",ft_printf("[%s]\t", "hi"));
-// 	printf("%d\n",ft_printf("100%% done\t")); 
-// 	ft_printf("[%s]\n", NULL);
-// }
+#include <stdio.h>
+int main()
+{
+	printf("%x\n", 26); // should return 1a
+}

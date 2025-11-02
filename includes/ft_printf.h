@@ -6,7 +6,7 @@
 /*   By: mel-assa <mel-assa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 12:22:27 by mel-assa          #+#    #+#             */
-/*   Updated: 2025/10/11 19:24:16 by mel-assa         ###   ########.fr       */
+/*   Updated: 2025/11/02 18:19:24 by mel-assa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 # include <stdarg.h>
 
 int ft_printf(const char *, ...);
+int ft_handle_u(va_list *args);
 
 #endif
